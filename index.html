@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Lab — 業務を整理して、仕事を軽くする</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #2E5E6E;
+    --teal-dark: #1e4050;
+    --teal-light: #e8f1f4;
+    --amber: #C17B3A;
+    --amber-light: #f5ead9;
+    --offwhite: #F5F0E8;
+    --charcoal: #3A3A3A;
+    --charcoal-soft: #5c5c5c;
+    --border: rgba(46,94,110,0.15);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--offwhite);
+    color: var(--charcoal);
+    line-height: 1.85;
+    font-weight: 300;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(245,240,232,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.1rem; font-weight: 600;
+    color: var(--teal); letter-spacing: 0.05em;
+  }
+  .nav-logo span { color: var(--amber); }
+  nav a.nav-cta {
+    font-size: 0.8rem; font-weight: 500;
+    color: var(--teal); text-decoration: none;
+    border: 1px solid var(--teal);
+    padding: 0.45rem 1.2rem;
+    letter-spacing: 0.06em;
+    transition: background 0.2s, color 0.2s;
+  }
+  nav a.nav-cta:hover { background: var(--teal); color: var(--offwhite); }
+
+  /* ─── HERO ─── */
+  #hero {
+    background: var(--teal);
+    color: var(--offwhite);
+    padding: 8rem 4rem 7rem;
+    position: relative; overflow: hidden;
+  }
+  #hero::before {
+    content: '';
+    position: absolute; top: -120px; right: -80px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    border: 80px solid rgba(193,123,58,0.12);
+    pointer-events: none;
+  }
+  #hero::after {
+    content: '';
+    position: absolute; bottom: -60px; left: 200px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    border: 40px solid rgba(245,240,232,0.06);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 780px; position: relative; }
+  .hero-eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.2em; font-weight: 500;
+    color: var(--amber); text-transform: uppercase;
+    margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block;
+    width: 32px; height: 1px; background: var(--amber);
+  }
+  h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300; line-height: 1.45;
+    letter-spacing: 0.02em; margin-bottom: 1rem;
+  }
+  h1 strong {
+    font-weight: 600; display: block;
+    color: var(--offwhite);
+  }
+  h1 em {
+    font-style: normal; color: rgba(245,240,232,0.65);
+    font-size: 0.75em;
+  }
+  .hero-sub {
+    font-size: 1rem; line-height: 2;
+    color: rgba(245,240,232,0.75);
+    margin: 2rem 0 3rem;
+    max-width: 560px;
+  }
+  .btn-primary {
+    display: inline-block;
+    background: var(--amber); color: var(--offwhite);
+    padding: 1rem 2.4rem;
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: #a5682e; transform: translateY(-1px); }
+
+  /* ─── SECTION BASE ─── */
+  section { padding: 6rem 4rem; }
+  .section-inner { max-width: 1000px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 0.22em; font-weight: 500;
+    color: var(--amber); text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 0.7rem;
+  }
+  .section-label::before {
+    content: ''; display: block;
+    width: 24px; height: 1px; background: var(--amber);
+  }
+  h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 300; line-height: 1.5;
+    color: var(--teal); letter-spacing: 0.02em;
+    margin-bottom: 2.5rem;
+  }
+  h2 strong { font-weight: 600; }
+
+  /* ─── BRANCH SECTION ─── */
+  #branch { background: #fff; }
+  .branch-card { cursor: pointer; }
+  .branch-card.active { background: var(--teal-light); border-left: 3px solid var(--teal); }
+  .branch-link {
+    font-size: 0.78rem; letter-spacing: 0.1em;
+    color: #fff; background: var(--teal);
+    text-decoration: none; font-weight: 500;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    margin-top: 1rem;
+    transition: background 0.2s;
+  }
+  .branch-link:hover { background: var(--teal-dark); }
+  .branch-link::after { content: '↓'; }
+
+  /* ─── FORK SECTIONS ─── */
+  .fork-section {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    padding: 5rem 4rem;
+    border-left: 4px solid var(--amber);
+    position: relative;
+  }
+  .fork-section.visible {
+    display: block;
+  }
+  .fork-section.faded {
+    opacity: 1;
+  }
+  #for-workshop { background: #f0f5f7; }
+  #for-app      { background: #f5f2ed; }
+  #for-beginner { background: #f2f5f0; }
+  .fork-tag {
+    font-size: 0.68rem; letter-spacing: 0.22em; font-weight: 500;
+    color: var(--amber); text-transform: uppercase;
+    display: flex; align-items: center; gap: 0.6rem;
+    margin-bottom: 1.5rem;
+  }
+  .fork-tag::before {
+    content: ''; display: block;
+    width: 20px; height: 1px; background: var(--amber);
+  }
+  .fork-heading {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    font-weight: 300; line-height: 1.5;
+    color: var(--teal); margin-bottom: 1.5rem;
+  }
+  .fork-body {
+    font-size: 0.95rem; line-height: 2.1;
+    color: var(--charcoal-soft);
+    max-width: 680px;
+  }
+  .fork-body p { margin-bottom: 1rem; }
+  .fork-body p:last-child { color: var(--charcoal); font-weight: 400; }
+
+  .branch-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .branch-card {
+    background: #fff;
+    padding: 2.5rem 2rem;
+    display: flex; flex-direction: column;
+    gap: 1rem;
+    transition: background 0.2s;
+  }
+  .branch-card:hover { background: var(--teal-light); }
+  .branch-num {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 2.5rem; font-weight: 300;
+    color: var(--teal); opacity: 0.25;
+    line-height: 1;
+  }
+  .branch-card h3 {
+    font-size: 0.95rem; font-weight: 500;
+    color: var(--teal); line-height: 1.6;
+  }
+  .branch-card p {
+    font-size: 0.85rem; color: var(--charcoal-soft);
+    line-height: 1.9; flex: 1;
+  }
+
+
+  /* ─── EMPATHY ─── */
+  #empathy { background: var(--offwhite); }
+  .pain-list {
+    list-style: none;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 1rem;
+  }
+  .pain-list li {
+    background: var(--offwhite);
+    padding: 1.8rem 2rem;
+    font-size: 0.95rem; line-height: 1.8;
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .pain-list li::before {
+    content: '';
+    display: block; flex-shrink: 0;
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--amber);
+    margin-top: 0.7em;
+  }
+
+  /* ─── WHAT IS ─── */
+  #what { background: var(--teal); color: var(--offwhite); }
+  #what .section-label { color: rgba(193,123,58,0.9); }
+  #what .section-label::before { background: rgba(193,123,58,0.9); }
+  #what h2 { color: var(--offwhite); }
+  .what-lead {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    font-weight: 300; line-height: 1.75;
+    color: rgba(245,240,232,0.9);
+    max-width: 700px; margin-bottom: 3rem;
+  }
+  .what-lead strong {
+    font-weight: 600; color: var(--offwhite);
+    display: block; font-size: 1.15em;
+  }
+  .what-points {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; margin-top: 1rem;
+  }
+  .what-point {
+    border-top: 1px solid rgba(245,240,232,0.2);
+    padding-top: 1.5rem;
+  }
+  .what-point-num {
+    font-size: 0.65rem; letter-spacing: 0.2em;
+    color: rgba(193,123,58,0.8);
+    margin-bottom: 0.8rem; font-weight: 500;
+  }
+  .what-point p {
+    font-size: 0.9rem; line-height: 1.8;
+    color: rgba(245,240,232,0.75);
+  }
+
+  /* ─── OUTCOMES ─── */
+  #outcomes { background: #fff; }
+  .outcomes-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .outcome-item {
+    background: #fff; padding: 2rem 1.5rem;
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .outcome-num {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.7rem; letter-spacing: 0.15em;
+    color: var(--amber); font-weight: 500;
+  }
+  .outcome-item p {
+    font-size: 0.85rem; line-height: 1.85;
+    color: var(--charcoal);
+  }
+
+  /* ─── CURRICULUM ─── */
+  #curriculum { background: var(--offwhite); }
+  .curriculum-steps {
+    display: flex; gap: 0;
+    border: 1px solid var(--border);
+    margin-top: 1rem;
+  }
+  .curriculum-step {
+    flex: 1;
+    padding: 2rem 1.5rem;
+    background: var(--offwhite);
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+  .curriculum-step:last-child { border-right: none; }
+  .step-num {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 3rem; font-weight: 300;
+    color: var(--teal); opacity: 0.15;
+    line-height: 1; margin-bottom: 0.5rem;
+  }
+  .curriculum-step h4 {
+    font-size: 0.85rem; font-weight: 500;
+    color: var(--teal); margin-bottom: 0.4rem;
+  }
+  .curriculum-step p {
+    font-size: 0.78rem; color: var(--charcoal-soft); line-height: 1.7;
+  }
+  .curriculum-note {
+    font-size: 0.75rem; color: var(--charcoal-soft);
+    margin-top: 1.5rem; letter-spacing: 0.03em;
+  }
+
+  /* ─── HOW ─── */
+  #how { background: #fff; }
+  .how-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 2rem; margin-top: 1rem;
+  }
+  .how-item {
+    border-top: 2px solid var(--teal);
+    padding-top: 1.2rem;
+  }
+  .how-item p { font-size: 0.88rem; line-height: 1.85; color: var(--charcoal); }
+
+  /* ─── INSTRUCTOR ─── */
+  #instructor { background: var(--offwhite); }
+  .instructor-inner {
+    display: grid; grid-template-columns: 1fr 2fr;
+    gap: 5rem; align-items: start;
+  }
+  .instructor-avatar {
+    aspect-ratio: 1;
+    background: var(--teal-light);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .instructor-avatar span {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 2rem; color: var(--teal); opacity: 0.4;
+  }
+  .instructor-body p {
+    font-size: 0.92rem; line-height: 2;
+    color: var(--charcoal-soft); margin-bottom: 1rem;
+  }
+  .instructor-body strong { color: var(--charcoal); font-weight: 500; }
+
+  /* ─── AFTER ─── */
+  #after { background: var(--teal); color: var(--offwhite); }
+  #after .section-label { color: rgba(193,123,58,0.9); }
+  #after .section-label::before { background: rgba(193,123,58,0.9); }
+  #after h2 { color: var(--offwhite); }
+  .after-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: rgba(245,240,232,0.15);
+    border: 1px solid rgba(245,240,232,0.15);
+    margin-bottom: 2.5rem;
+  }
+  .after-item {
+    background: rgba(245,240,232,0.04);
+    padding: 2rem 1.5rem;
+  }
+  .after-item-icon {
+    width: 32px; height: 2px;
+    background: var(--amber); margin-bottom: 1rem;
+  }
+  .after-item h4 {
+    font-size: 0.88rem; font-weight: 500;
+    color: var(--offwhite); margin-bottom: 0.5rem;
+  }
+  .after-item p {
+    font-size: 0.8rem; color: rgba(245,240,232,0.6); line-height: 1.8;
+  }
+  .after-note {
+    font-size: 0.85rem; color: rgba(245,240,232,0.7);
+    line-height: 1.9; max-width: 640px;
+  }
+
+  /* ─── OVERVIEW ─── */
+  #overview { background: var(--offwhite); }
+  .overview-box {
+    border: 1px solid var(--border);
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--border);
+    margin-bottom: 2rem;
+  }
+  .overview-row {
+    background: var(--offwhite);
+    padding: 1.4rem 2rem;
+    display: flex; gap: 2rem; align-items: baseline;
+  }
+  .overview-label {
+    font-size: 0.72rem; letter-spacing: 0.15em;
+    color: var(--charcoal-soft); font-weight: 500;
+    flex-shrink: 0; width: 80px; padding-top: 0.1em;
+  }
+  .overview-value {
+    font-size: 0.9rem; color: var(--charcoal); line-height: 1.7;
+  }
+  .overview-note {
+    font-size: 0.8rem; color: var(--charcoal-soft); line-height: 1.9;
+  }
+
+  /* ─── CTA ─── */
+  #cta { background: var(--teal); color: var(--offwhite); padding: 7rem 4rem; }
+  #cta .section-inner { max-width: 680px; }
+  .cta-heading {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 300; line-height: 1.5;
+    margin-bottom: 1rem; color: var(--offwhite);
+  }
+  .cta-sub {
+    font-size: 0.88rem; color: rgba(245,240,232,0.7);
+    line-height: 1.9; margin-bottom: 3rem;
+  }
+  .form-group { margin-bottom: 1.2rem; }
+  .form-group label {
+    display: block; font-size: 0.75rem; letter-spacing: 0.1em;
+    color: rgba(245,240,232,0.65); margin-bottom: 0.4rem;
+    font-weight: 500;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: rgba(245,240,232,0.08);
+    border: 1px solid rgba(245,240,232,0.2);
+    color: var(--offwhite);
+    padding: 0.85rem 1rem;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.88rem; font-weight: 300;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none; -webkit-appearance: none;
+  }
+  .form-group select option { background: var(--teal); color: var(--offwhite); }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(245,240,232,0.3); }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: rgba(193,123,58,0.6);
+    background: rgba(245,240,232,0.12);
+  }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .submit-btn {
+    width: 100%; padding: 1.1rem;
+    background: var(--amber); color: var(--offwhite);
+    border: none; cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.88rem; font-weight: 500; letter-spacing: 0.1em;
+    margin-top: 1rem;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .submit-btn:hover { background: #a5682e; transform: translateY(-1px); }
+  .form-note {
+    font-size: 0.75rem; color: rgba(245,240,232,0.45);
+    margin-top: 1rem; line-height: 1.7;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--charcoal);
+    color: rgba(245,240,232,0.4);
+    padding: 2.5rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 0.75rem; letter-spacing: 0.08em;
+  }
+  .footer-logo {
+    font-family: 'Noto Serif JP', serif;
+    color: rgba(245,240,232,0.6); font-size: 0.9rem;
+  }
+  .footer-logo span { color: rgba(193,123,58,0.7); }
+
+  /* ─── SUCCESS ─── */
+  #form-success {
+    display: none; text-align: center; padding: 3rem 0;
+  }
+  #form-success .success-icon {
+    width: 48px; height: 48px;
+    border: 2px solid var(--amber);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 1.2rem; color: var(--amber);
+  }
+  #form-success h3 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.2rem; font-weight: 300;
+    color: var(--offwhite); margin-bottom: 0.8rem;
+  }
+  #form-success p { font-size: 0.85rem; color: rgba(245,240,232,0.6); }
+
+  /* ─── PRICING ─── */
+  #pricing { background: #fff; }
+
+  /* ─── DIVIDER ─── */
+  .amber-rule {
+    width: 40px; height: 2px;
+    background: var(--amber);
+    margin-bottom: 2rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Business<span>Lab</span></div>
+  <a href="#cta" class="nav-cta">開催決定時に優先案内を受け取る</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Work Design Program</div>
+    <h1>
+      <strong>業務を整理して、仕事を軽くする</strong>
+      <em>実践プログラム</em>
+    </h1>
+    <p class="hero-sub">
+      日々の業務に追われる状態から、<br>
+      「手放せる仕事」と「残すべき仕事」を整理し、<br>
+      自分の事業を軽くするための5週間
+    </p>
+    <p style="font-size:0.82rem;color:rgba(245,240,232,0.5);letter-spacing:0.05em;margin-bottom:2.5rem;">
+      AIや外注の前に、"構造"を整える
+    </p>
+    <a href="#cta" class="btn-primary">開催決定時に優先案内を受け取る（事前登録）</a>
+    <p style="font-size:0.82rem;color:rgba(245,240,232,0.45);margin-top:1.8rem;letter-spacing:0.04em;border-top:1px solid rgba(245,240,232,0.1);padding-top:1.5rem;">「学ぶ」のではなく、「自分の業務を変える」ための場です</p>
+  </div>
+</section>
+
+<!-- BRANCH -->
+<section id="branch">
+  <div class="section-inner">
+    <div class="section-label">For You</div>
+    <h2>あなたの状況に<strong>近いものを選んでください</strong></h2>
+    <div class="branch-grid">
+      <div class="branch-card" id="card-workshop">
+        <div class="branch-num">01</div>
+        <h3>ワークショップ参加者の方</h3>
+        <p>ワークショップで見えた課題を、そのままにしていませんか？</p>
+        <a href="#for-workshop" class="branch-link" onclick="showFork('for-workshop','card-workshop',event)">続きを見る</a>
+      </div>
+      <div class="branch-card" id="card-app">
+        <div class="branch-num">02</div>
+        <h3>アプリ利用者の方</h3>
+        <p>ツールを使ってみたけれど、根本的な改善にはつながっていないと感じていませんか？</p>
+        <a href="#for-app" class="branch-link" onclick="showFork('for-app','card-app',event)">続きを見る</a>
+      </div>
+      <div class="branch-card" id="card-beginner">
+        <div class="branch-num">03</div>
+        <h3>初めての方</h3>
+        <p>業務整理や改善に興味はあるけれど、何から始めればいいかわからない方へ</p>
+        <a href="#for-beginner" class="branch-link" onclick="showFork('for-beginner','card-beginner',event)">詳しく見る</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORK: WORKSHOP -->
+<section id="for-workshop" class="fork-section">
+  <div class="section-inner">
+    <div class="fork-tag">For Workshop Participants</div>
+    <div class="fork-heading">ワークショップの「続き」を<br>やりたい方へ</div>
+    <div class="fork-body">
+      <p>ワークショップで見えた課題を、そのままにしていませんか？</p>
+      <p>実際の業務に落とし込むには、もう一歩踏み込んだ整理が必要です。</p>
+      <p>Business Labでは、その続きを「実務レベル」まで進めていきます。</p>
+    </div>
+  </div>
+</section>
+
+<!-- FORK: APP USER -->
+<section id="for-app" class="fork-section">
+  <div class="section-inner">
+    <div class="fork-tag">For App Users</div>
+    <div class="fork-heading">ツールだけでは解決しないと<br>感じている方へ</div>
+    <div class="fork-body">
+      <p>アプリを使ってみても、思ったほど改善につながらない。</p>
+      <p>気づけば元のやり方に戻ってしまう。</p>
+      <p>それは「業務の構造」が整理されていない可能性があります。Business Labでは、ツールではなく"業務そのもの"を整理していきます。</p>
+    </div>
+  </div>
+</section>
+
+<!-- FORK: BEGINNER -->
+<section id="for-beginner" class="fork-section">
+  <div class="section-inner">
+    <div class="fork-tag">For First-Timers</div>
+    <div class="fork-heading">何から始めればいいか<br>わからない方へ</div>
+    <div class="fork-body">
+      <p>業務整理といっても、何をすればいいのか分からない。</p>
+      <p>自分に必要かどうかも判断できない。</p>
+      <p>Business Labでは、実際の業務を使いながら一つずつ整理し、「どこを変えるべきか」を明確にしていきます。</p>
+    </div>
+  </div>
+</section>
+
+<!-- EMPATHY -->
+<section id="empathy">
+  <div class="section-inner">
+    <div class="section-label">Situation</div>
+    <h2>こんな状態に<strong>なっていませんか？</strong></h2>
+    <div class="amber-rule"></div>
+    <ul class="pain-list">
+      <li>やるべきことが多く、日々の業務に追われている</li>
+      <li>AIや外注を使いたいが、どこから手をつければいいかわからない</li>
+      <li>任せたい仕事はあるが、整理されていない</li>
+      <li>気づけば自分しかできない仕事ばかりになっている</li>
+    </ul>
+  </div>
+</section>
+
+<!-- WHAT IS -->
+<section id="what">
+  <div class="section-inner">
+    <div class="section-label">About</div>
+    <h2>Business Lab<strong>とは</strong></h2>
+    <div class="what-lead">
+      Business Labは、講座ではありません。<br>
+      <strong>業務を実際に整理し、仕事を軽くするための実践型プログラムです。</strong>
+    </div>
+    <div class="what-points">
+      <div class="what-point">
+        <div class="what-point-num">01</div>
+        <p>ツールを学ぶのではなく、自社の業務を使って整理・改善していきます</p>
+      </div>
+      <div class="what-point">
+        <div class="what-point-num">02</div>
+        <p>「やること」だけでなく「やらないこと」も決めます</p>
+      </div>
+      <div class="what-point">
+        <div class="what-point-num">03</div>
+        <p>実践型コンサルティングに近い形で進行します</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTCOMES -->
+<section id="outcomes">
+  <div class="section-inner">
+    <div class="section-label">Outcomes</div>
+    <h2>参加後に<strong>得られる変化</strong></h2>
+    <div class="outcomes-grid">
+      <div class="outcome-item">
+        <div class="outcome-num">01</div>
+        <p>業務が整理され、全体像が見えるようになる</p>
+      </div>
+      <div class="outcome-item">
+        <div class="outcome-num">02</div>
+        <p>任せられる仕事と、自分がやるべき仕事が明確になる</p>
+      </div>
+      <div class="outcome-item">
+        <div class="outcome-num">03</div>
+        <p>AIや外注の使いどころがわかる</p>
+      </div>
+      <div class="outcome-item">
+        <div class="outcome-num">04</div>
+        <p>「やらない仕事」が決まり、時間に余白が生まれる</p>
+      </div>
+      <div class="outcome-item">
+        <div class="outcome-num">05</div>
+        <p>業務が"回る状態"に近づく</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CURRICULUM -->
+<section id="curriculum">
+  <div class="section-inner">
+    <div class="section-label">Program</div>
+    <h2>プログラムの<strong>流れ（予定）</strong></h2>
+    <div class="curriculum-steps">
+      <div class="curriculum-step">
+        <div class="step-num">1</div>
+        <h4>業務の棚卸し</h4>
+        <p>今やっている仕事を全て書き出す</p>
+      </div>
+      <div class="curriculum-step">
+        <div class="step-num">2</div>
+        <h4>業務の分解と整理</h4>
+        <p>工程に分け、全体構造を見える化</p>
+      </div>
+      <div class="curriculum-step">
+        <div class="step-num">3</div>
+        <h4>判断基準の言語化</h4>
+        <p>残す仕事・手放す仕事の基準を決める</p>
+      </div>
+      <div class="curriculum-step">
+        <div class="step-num">4</div>
+        <h4>AI・外注の適用判断</h4>
+        <p>具体的な委託先・ツールを特定する</p>
+      </div>
+      <div class="curriculum-step">
+        <div class="step-num">5</div>
+        <h4>今後の業務設計</h4>
+        <p>"回る仕組み"を設計・実装へ繋げる</p>
+      </div>
+    </div>
+    <p class="curriculum-note">※ 内容は参加者の状況に応じて調整します</p>
+  </div>
+</section>
+
+<!-- HOW -->
+<section id="how">
+  <div class="section-inner">
+    <div class="section-label">Design</div>
+    <h2>無理なく、でも<strong>確実に進める設計</strong></h2>
+    <div class="how-grid">
+      <div class="how-item">
+        <p>少人数制で実施。参加者一人ひとりの業務に向き合います。</p>
+      </div>
+      <div class="how-item">
+        <p>実際の業務を題材に進行。架空の演習ではありません。</p>
+      </div>
+      <div class="how-item">
+        <p>各回ごとに整理・宿題あり。実践の積み重ねで変化が起きます。</p>
+      </div>
+      <div class="how-item">
+        <p>必要に応じて個別フォローあり。置いていかれる心配はありません。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTRUCTOR -->
+<section id="instructor">
+  <div class="section-inner">
+    <div class="section-label">Instructor</div>
+    <h2>講師<strong>について</strong></h2>
+    <div class="instructor-inner">
+      <div class="instructor-avatar">
+        <span>Glocal<br>Lab.</span>
+      </div>
+      <div class="instructor-body">
+        <p>業務改善・DX支援として、実際の現場で業務設計・外注化・自動化を行っています。</p>
+        <p>理論ではなく、<strong>「実際に回る形」を前提にサポートします。</strong></p>
+        <p>EC事業者での業務分解・RPA導入など、複数の業務改善支援に関与。現場で起きていることをベースにプログラムを設計しています。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AFTER -->
+<section id="after">
+  <div class="section-inner">
+    <div class="section-label">Next Steps</div>
+    <h2>参加後の<strong>選択肢</strong></h2>
+    <div class="after-grid">
+      <div class="after-item">
+        <div class="after-item-icon"></div>
+        <h4>人材バンクの活用</h4>
+        <p>業務の外部委託先をご紹介します</p>
+      </div>
+      <div class="after-item">
+        <div class="after-item-icon"></div>
+        <h4>業務整理の継続サポート</h4>
+        <p>整理した仕組みを定着させます</p>
+      </div>
+      <div class="after-item">
+        <div class="after-item-icon"></div>
+        <h4>RPA・自動化の導入</h4>
+        <p>繰り返し業務を仕組みに変えます</p>
+      </div>
+      <div class="after-item">
+        <div class="after-item-icon"></div>
+        <h4>スポット相談</h4>
+        <p>必要な時に単発で相談できます</p>
+      </div>
+    </div>
+    <p class="after-note">受講して終わりではなく、実際の運用までサポートできる体制を用意しています。</p>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-inner">
+    <div class="section-label">Investment</div>
+    <h2>参加<strong>費用</strong></h2>
+    <div style="border:1px solid var(--border);margin-bottom:2rem;">
+      <div style="padding:2.5rem 2.5rem 2rem;border-bottom:1px solid var(--border);">
+        <div style="font-size:0.72rem;letter-spacing:0.15em;color:var(--charcoal-soft);font-weight:500;margin-bottom:0.6rem;">Business Lab（全5回）</div>
+        <div style="font-family:'Noto Serif JP',serif;font-size:2.4rem;font-weight:300;color:var(--teal);letter-spacing:0.02em;">79,800<span style="font-size:1rem;margin-left:0.3rem;color:var(--charcoal-soft);">円（税込）</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);">
+        <div style="background:var(--offwhite);padding:1.8rem 2.5rem;">
+          <div style="font-size:0.7rem;letter-spacing:0.12em;color:var(--amber);font-weight:500;margin-bottom:0.5rem;">ワークショップ参加者</div>
+          <div style="font-family:'Noto Serif JP',serif;font-size:1.6rem;font-weight:300;color:var(--teal);">66,000<span style="font-size:0.85rem;margin-left:0.2rem;color:var(--charcoal-soft);">円（税込）</span></div>
+        </div>
+        <div style="background:var(--offwhite);padding:1.8rem 2.5rem;">
+          <div style="font-size:0.7rem;letter-spacing:0.12em;color:var(--amber);font-weight:500;margin-bottom:0.5rem;">事前登録者</div>
+          <div style="font-family:'Noto Serif JP',serif;font-size:1.6rem;font-weight:300;color:var(--teal);">74,800<span style="font-size:0.85rem;margin-left:0.2rem;color:var(--charcoal-soft);">円（税込）</span></div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:0.85rem;line-height:1.9;color:var(--charcoal-soft);max-width:640px;">単なる講座ではなく、自社の業務を実際に整理し、「仕事を軽くする状態」をつくるプログラムです。</p>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="section-inner">
+    <div class="section-label">Schedule</div>
+    <h2>開催<strong>概要</strong></h2>
+    <div class="overview-box">
+      <div class="overview-row">
+        <div class="overview-label">開催時期</div>
+        <div class="overview-value">2026年 秋頃開催予定</div>
+      </div>
+      <div class="overview-row">
+        <div class="overview-label">回数</div>
+        <div class="overview-value">全5回予定</div>
+      </div>
+      <div class="overview-row">
+        <div class="overview-label">形式</div>
+        <div class="overview-value">オンラインまたは対面（YAMAGA BASE）</div>
+      </div>
+      <div class="overview-row">
+        <div class="overview-label">定員</div>
+        <div class="overview-value">少人数制（人数調整中）</div>
+      </div>
+    </div>
+    <p class="overview-note">現在、参加希望者の状況を踏まえて内容・日程を調整しています。<br>少人数での実施を予定しているため、事前登録者へ優先的にご案内します。</p>
+  </div>
+</section>
+
+<!-- CTA / FORM -->
+<section id="cta">
+  <div class="section-inner">
+    <div class="section-label" style="color:rgba(193,123,58,0.9);">
+      <span style="display:block;width:24px;height:1px;background:rgba(193,123,58,0.9);"></span>
+      Pre Registration
+    </div>
+    <div class="cta-heading">Business Lab<br>事前案内に登録する</div>
+    <p class="cta-sub">
+      開催決定時に最初にご案内します。少人数制のため、事前登録者を優先します。
+    </p>
+    <p style="font-size:0.92rem;line-height:1.9;color:rgba(245,240,232,0.65);border-left:2px solid var(--amber);padding-left:1.2rem;margin-bottom:2.5rem;font-family:'Noto Serif JP',serif;font-weight:300;">このプログラムは、すぐに導入することよりも、<br>「本気で業務を見直したい方」に向けています。</p>
+    <div id="registration-form">
+      <input type="hidden" id="source" value="">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>お名前</label>
+          <input type="text" id="name" placeholder="山田 太郎">
+        </div>
+        <div class="form-group">
+          <label>メールアドレス</label>
+          <input type="email" id="email" placeholder="example@email.com">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>業種（任意）</label>
+        <select id="industry">
+          <option value="">選択してください</option>
+          <option>EC・通販</option>
+          <option>サービス業</option>
+          <option>製造・卸</option>
+          <option>IT・Web</option>
+          <option>コンサルティング</option>
+          <option>フリーランス・個人事業</option>
+          <option>その他</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>現在の課題（任意）</label>
+        <textarea id="challenge" placeholder="業務の課題や、参加を考えているきっかけなど、自由にお書きください"></textarea>
+      </div>
+      <button class="submit-btn" id="submit-btn" onclick="handleSubmit()">事前登録する</button>
+      <p class="form-note">
+        ご登録いただいた情報は、Business Lab の開催案内にのみ使用します。<br>
+        スパムメールは送りません。
+      </p>
+    </div>
+    <div id="form-success">
+      <div class="success-icon">✓</div>
+      <h3>登録が完了しました</h3>
+      <p>開催決定の際には、優先的にご案内いたします。</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Business<span>Lab</span> — Work Design Program</div>
+  <div>© 2026 Glocal Lab. All rights reserved.</div>
+</footer>
+
+<script>
+// ── GAS endpoint ─────────────────────────────────────────────────
+// デプロイ後にここを置き換えてください
+var GAS_URL = 'https://script.google.com/macros/s/AKfycbwBxFHEIYFYYJYYgHCi8rurbtQdLa_y6AZyEqGT3C3xyeRper8v0wQABeqkT99MAtY/exec';
+
+// ── 流入区分を記録 ────────────────────────────────────────────────
+var currentSource = '';
+
+// URLパラメータから流入区分を取得（?src=workshop / app / beginner）
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var src = params.get('src');
+  if (src) {
+    var map = { workshop: 'ワークショップ', app: 'アプリ', beginner: '初見' };
+    currentSource = map[src] || src;
+    document.getElementById('source').value = currentSource;
+  }
+})();
+
+// ── 分岐カードのクリック ──────────────────────────────────────────
+function showFork(sectionId, cardId, e) {
+  e.preventDefault();
+  var sourceMap = {
+    'for-workshop': 'ワークショップ',
+    'for-app':      'アプリ',
+    'for-beginner': '初見'
+  };
+  currentSource = sourceMap[sectionId] || '';
+  document.getElementById('source').value = currentSource;
+
+  var forks = document.querySelectorAll('.fork-section');
+  var cards = document.querySelectorAll('.branch-card');
+  forks.forEach(function(s) { s.classList.remove('visible','faded'); });
+  cards.forEach(function(c) { c.classList.remove('active'); });
+
+  var target = document.getElementById(sectionId);
+  var card   = document.getElementById(cardId);
+  target.classList.add('visible');
+  if (card) card.classList.add('active');
+  requestAnimationFrame(function() {
+    var top = target.getBoundingClientRect().top + window.pageYOffset - 80;
+    window.scrollTo({ top: top, behavior: 'smooth' });
+    setTimeout(function() { target.classList.add('faded'); }, 300);
+  });
+}
+
+// ── フォーム送信 ──────────────────────────────────────────────────
+function handleSubmit() {
+  var name      = document.getElementById('name').value.trim();
+  var email     = document.getElementById('email').value.trim();
+  var industry  = document.getElementById('industry').value;
+  var challenge = document.getElementById('challenge').value.trim();
+  var source    = document.getElementById('source').value || '直接アクセス';
+
+  if (!name || !email) {
+    alert('お名前とメールアドレスをご入力ください。');
+    return;
+  }
+  var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!re.test(email)) {
+    alert('正しいメールアドレスをご入力ください。');
+    return;
+  }
+
+  var btn = document.getElementById('submit-btn');
+  btn.textContent = '送信中...';
+  btn.disabled = true;
+
+  var payload = {
+    name:      name,
+    email:     email,
+    industry:  industry,
+    challenge: challenge,
+    source:    source
+  };
+
+  fetch(GAS_URL, {
+    method:  'POST',
+    mode:    'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify(payload)
+  })
+  .then(function() {
+    document.getElementById('registration-form').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  })
+  .catch(function() {
+    btn.textContent = '事前登録する';
+    btn.disabled = false;
+    alert('送信に失敗しました。お手数ですが、もう一度お試しください。');
+  });
+}
+</script>
+</body>
+</html>
