@@ -1,1 +1,1060 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>思考をアップグレードする仕事分解ワークショップ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal:       #2E5E6E;
+    --teal-dark:  #1f4251;
+    --teal-light: #3d7a8e;
+    --teal-faint: rgba(46,94,110,0.08);
+    --amber:      #C17B3A;
+    --amber-dark: #a0652e;
+    --amber-faint:rgba(193,123,58,0.12);
+    --offwhite:   #F5F0E8;
+    --offwhite2:  #EDE7DA;
+    --charcoal:   #3A3A3A;
+    --muted:      #484848;
+    --faint:      #777;
+    --border:     rgba(46,94,110,0.18);
+    --border-strong: rgba(46,94,110,0.35);
+  }
 
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--offwhite);
+    color: var(--charcoal);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 400;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV BAR ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(245,240,232,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 56px;
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    color: var(--teal);
+    text-transform: uppercase;
+  }
+
+  .nav-cta {
+    display: inline-block;
+    background: var(--amber);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.45rem 1.2rem;
+    border-radius: 2px;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: background 0.2s;
+  }
+
+  .nav-cta:hover { background: var(--amber-dark); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 2rem 5rem;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 15%;
+    right: -5%;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    border: 60px solid var(--teal-faint);
+    pointer-events: none;
+  }
+
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 900;
+    font-size: clamp(2.2rem, 5.5vw, 4.4rem);
+    line-height: 1.22;
+    letter-spacing: -0.01em;
+    color: var(--teal-dark);
+    margin-bottom: 1.8rem;
+    max-width: 780px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.4s forwards;
+  }
+
+  .hero-title .accent { color: var(--amber); }
+
+  .hero-copy {
+    font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+    color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 3rem;
+    max-width: 540px;
+    line-height: 2;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.6s forwards;
+  }
+
+  .hero-copy strong {
+    color: var(--charcoal);
+    font-weight: 600;
+  }
+
+  .hero-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.8s forwards;
+  }
+
+  .chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--teal);
+    border: 1px solid var(--border-strong);
+    padding: 0.4rem 1rem;
+    border-radius: 2px;
+    background: rgba(46,94,110,0.04);
+  }
+
+  .chip.amber {
+    color: var(--amber);
+    border-color: rgba(193,123,58,0.4);
+    background: rgba(193,123,58,0.05);
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* ── SECTION ── */
+  section {
+    padding: 5.5rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 1.6rem;
+  }
+
+  .section-title {
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+    line-height: 1.4;
+    color: var(--teal-dark);
+    margin-bottom: 1.5rem;
+  }
+
+  .section-body {
+    color: var(--muted);
+    font-size: 0.97rem;
+    line-height: 2;
+    font-weight: 300;
+    max-width: 600px;
+  }
+
+  /* ── SYMPATHY ── */
+  .sympathy-list {
+    list-style: none;
+    margin-top: 2rem;
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .sympathy-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    color: var(--muted);
+    font-weight: 300;
+    padding: 1.1rem 1.4rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: #fff;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    line-height: 1.7;
+  }
+
+  .sympathy-list li:hover {
+    border-color: var(--border-strong);
+    box-shadow: 0 2px 16px rgba(46,94,110,0.06);
+  }
+
+  .sympathy-list li::before {
+    content: '—';
+    color: var(--amber);
+    font-family: 'DM Mono', monospace;
+    flex-shrink: 0;
+  }
+
+  /* ── PROBLEM ── */
+  .problem-block {
+    margin-top: 2.5rem;
+    border: 1px solid var(--border-strong);
+    border-left: 4px solid var(--teal);
+    padding: 2.2rem 2.5rem;
+    border-radius: 3px;
+    background: #fff;
+  }
+
+  .problem-block p {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(1rem, 2.2vw, 1.25rem);
+    line-height: 1.9;
+    color: var(--charcoal);
+  }
+
+  .problem-block p .hl { color: var(--teal); font-weight: 700; }
+
+  .problem-list {
+    list-style: none;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .problem-list li {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(1rem, 2.2vw, 1.2rem);
+    color: var(--charcoal);
+    padding-left: 1.8rem;
+    position: relative;
+    line-height: 1.7;
+  }
+
+  .problem-list li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 1.6rem;
+    line-height: 1.2;
+    font-family: sans-serif;
+  }
+
+  /* ── SOLUTION ── */
+  .solution-steps { margin-top: 2.5rem; }
+
+  .step {
+    display: grid;
+    grid-template-columns: 3.2rem 1fr;
+    gap: 1.5rem;
+    align-items: start;
+    padding: 1.6rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .step:last-child { border-bottom: none; }
+
+  .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--amber);
+    letter-spacing: 0.05em;
+    padding-top: 0.15rem;
+  }
+
+  .step-content strong {
+    display: block;
+    font-weight: 600;
+    font-size: 1.02rem;
+    color: var(--teal-dark);
+    margin-bottom: 0.45rem;
+  }
+
+  .step-content p {
+    font-weight: 300;
+    color: var(--muted);
+    font-size: 0.93rem;
+    line-height: 1.85;
+  }
+
+  /* ── PROGRAM (teal bg) ── */
+  .program-bg {
+    background: var(--teal);
+  }
+
+  .program-bg section {
+    /* override text colors inside */
+  }
+
+  .program-bg .section-label { color: var(--amber); }
+  .program-bg .section-title { color: #fff; }
+  .program-bg .section-body { color: rgba(255,255,255,0.82); }
+
+  .program-grid {
+    margin-top: 2.2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .program-card {
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 1.8rem;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.07);
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .program-card:hover {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(193,123,58,0.5);
+  }
+
+  .card-phase {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.63rem;
+    letter-spacing: 0.2em;
+    color: var(--amber);
+    margin-bottom: 0.9rem;
+  }
+
+  .card-title {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.9rem;
+    color: #fff;
+  }
+
+  .card-items { list-style: none; display: grid; gap: 0.45rem; }
+
+  .card-items li {
+    font-size: 0.87rem;
+    color: rgba(255,255,255,0.82);
+    font-weight: 300;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .card-items li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--amber);
+  }
+
+  /* ── OUTCOMES ── */
+  .outcomes-grid {
+    margin-top: 2.2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .outcome-item {
+    padding: 1.6rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: #fff;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.3s, border-color 0.3s;
+  }
+
+  .outcome-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 3px;
+    background: var(--teal);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+
+  .outcome-item:hover::after { transform: scaleX(1); }
+  .outcome-item:hover { box-shadow: 0 4px 20px rgba(46,94,110,0.1); }
+
+  .outcome-item strong {
+    display: block;
+    font-weight: 600;
+    font-size: 0.97rem;
+    color: var(--teal-dark);
+    margin-bottom: 0.4rem;
+  }
+
+  .outcome-item p {
+    font-size: 0.87rem;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* ── INSTRUCTOR ── */
+  .instructor-card {
+    margin-top: 2.2rem;
+    border: 1px solid var(--border);
+    padding: 2.2rem 2.5rem;
+    border-radius: 3px;
+    background: #fff;
+    border-top: 3px solid var(--amber);
+  }
+
+  .instructor-card p {
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 2;
+    font-size: 0.97rem;
+  }
+
+  /* ── OVERVIEW TABLE ── */
+  .overview-table {
+    margin-top: 2.2rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .overview-row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .overview-row:last-child { border-bottom: none; }
+
+  .overview-label {
+    padding: 1.15rem 1.4rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: #fff;
+    background: var(--teal);
+    border-right: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .overview-value {
+    padding: 1.15rem 1.5rem;
+    font-size: 0.93rem;
+    color: var(--charcoal);
+    display: flex;
+    align-items: center;
+  }
+
+  /* ── REFUND ── */
+  .refund-grid {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .refund-item {
+    padding: 1.6rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    text-align: center;
+    background: #fff;
+  }
+
+  .refund-item .days {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.7rem;
+  }
+
+  .refund-item .rate {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--teal);
+  }
+
+  .refund-item.no-refund .rate { color: var(--faint); }
+
+  .refund-item .label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.3rem;
+  }
+
+  /* ── CTA ── */
+  .cta-bg {
+    background: var(--offwhite2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cta-inner {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 5.5rem 2rem;
+  }
+
+  .cta-inner .section-label { text-align: center; }
+  .cta-inner .section-title { text-align: center; }
+
+  .price-display { margin: 2rem 0 2.5rem; }
+
+  .price-display .amount {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 900;
+    color: var(--teal-dark);
+  }
+
+  .price-display .unit {
+    font-size: 1.1rem;
+    color: var(--muted);
+    margin-left: 0.3rem;
+  }
+
+  .price-display .tax {
+    font-size: 0.72rem;
+    color: var(--faint);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.12em;
+    margin-top: 0.6rem;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--amber);
+    color: #fff;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 1.1rem 3.5rem;
+    border-radius: 3px;
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    transition: background 0.25s, transform 0.2s, box-shadow 0.3s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .cta-btn:hover {
+    background: var(--amber-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(193,123,58,0.28);
+  }
+
+  .payment-methods {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+  }
+
+  .pay-badge {
+    border: 1px solid var(--border-strong);
+    padding: 0.5rem 1.2rem;
+    border-radius: 2px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--teal);
+    background: #fff;
+  }
+
+  .pay-badge.sub { color: var(--muted); border-color: var(--border); }
+
+  .cta-note {
+    margin-top: 1.6rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.06em;
+    line-height: 2.1;
+  }
+
+  /* ── DISCLAIMER / FOOTER ── */
+  .disclaimer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .disclaimer p {
+    font-size: 0.78rem;
+    color: var(--faint);
+    line-height: 2.1;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  .disclaimer a { color: var(--teal); text-decoration: none; }
+  .disclaimer a:hover { text-decoration: underline; }
+
+  footer {
+    background: var(--teal-dark);
+    padding: 2rem;
+    text-align: center;
+  }
+
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* ── INDIVIDUAL NOTE ── */
+  .individual-note {
+    margin-top: 1.4rem;
+    font-size: 0.82rem;
+    color: var(--teal);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    border-left: 3px solid var(--amber);
+    padding-left: 1rem;
+  }
+
+  /* ── BUSINESS LAB NOTE ── */
+  .business-lab-note {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.6rem 2rem 2.5rem;
+  }
+
+  .business-lab-note p {
+    font-size: 0.88rem;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.8;
+  }
+
+  .business-lab-note a {
+    color: var(--teal);
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s;
+  }
+
+  .business-lab-note a:hover { color: var(--teal-dark); }
+
+  /* ── CTA LEAD ── */
+  .cta-lead {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: var(--teal-dark);
+    line-height: 1.9;
+    margin-bottom: 2.5rem;
+  }
+
+  .cta-lead strong { color: var(--amber); }
+
+  /* ── SEATS REMAINING ── */
+  .seats-remaining {
+    display: inline-block;
+    background: rgba(193,123,58,0.1);
+    border: 1px solid rgba(193,123,58,0.35);
+    color: var(--amber-dark);
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.45rem 1.2rem;
+    border-radius: 2px;
+    margin-bottom: 1.2rem;
+    letter-spacing: 0.03em;
+  }
+
+  .seats-remaining span {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.15rem;
+  }
+
+  .seats-remaining small {
+    font-weight: 400;
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-left: 0.4rem;
+  }
+
+  .small-group-note {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.85;
+    margin-bottom: 1.4rem;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .hero { padding: 7rem 1.5rem 4rem; }
+    section { padding: 4rem 1.5rem; }
+    .overview-row { grid-template-columns: 1fr; }
+    .overview-label { border-bottom: 1px solid rgba(255,255,255,0.2); }
+    .step { grid-template-columns: 2.5rem 1fr; }
+    .refund-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">Glocal Lab. · Workshop</span>
+  <a class="nav-cta" href="#apply">申込む</a>
+</nav>
+
+<!-- ① HERO -->
+<div style="border-bottom:1px solid var(--border);">
+<section class="hero">
+  <p class="hero-label">Work Design Program · YAMAGA BASE</p>
+  <h1 class="hero-title">
+    思考を<span class="accent">アップグレード</span>する<br>仕事分解ワークショップ
+  </h1>
+  <p class="hero-copy">
+    <strong>AIが活かせない理由は「仕事が曖昧」だから。</strong><br>
+    「確認している」「対応している」<br>
+    その中身、説明できますか？<br><br>
+    この3時間で、あなたの仕事を<strong>"説明できる状態"</strong>にします。
+  </p>
+  <div class="hero-chips">
+    <span class="chip amber">少人数制 6〜8名</span>
+    <span class="chip">3時間</span>
+    <span class="chip">¥9,800（税込）</span>
+    <span class="chip">2026年5月16日（土）14:00〜17:00</span>
+    <span class="chip">YAMAGA BASE</span>
+  </div>
+</section>
+</div>
+
+<!-- ② 共感 -->
+<section>
+  <p class="section-label reveal">Situation</p>
+  <h2 class="section-title reveal">こんな状態、ありませんか</h2>
+  <ul class="sympathy-list reveal">
+    <li>忙しいのに、何に時間を使っているか説明できない</li>
+    <li>人に任せたいが、うまく引き継げない</li>
+    <li>AIを使っても思ったような結果が出ない</li>
+    <li>結局、自分がやるのが一番早い</li>
+    <li>「自分しかできない仕事」が増えていませんか？</li>
+    <li>その業務、「とりあえず」で作ったまま回し続けていませんか？</li>
+  </ul>
+  <p class="individual-note reveal">※ 個人参加限定のワークショップです</p>
+</section>
+
+<hr class="divider">
+
+<!-- ③ 問題提起 -->
+<section>
+  <p class="section-label reveal">Problem</p>
+  <h2 class="section-title reveal">なぜうまくいかないのか</h2>
+  <p class="section-body reveal">原因はスキルではありません。仕事が曖昧なままになっていることです。</p>
+  <div class="problem-block reveal">
+    <ul class="problem-list">
+      <li>手順が言語化されていない</li>
+      <li>判断基準が頭の中にある</li>
+      <li>作業が感覚で回っている</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ④ 解決策 -->
+<section>
+  <p class="section-label reveal">Solution</p>
+  <h2 class="section-title reveal">ではどうするか？</h2>
+  <p class="section-body reveal">やるべきことは1つです。仕事を分解し、解像度を上げること。</p>
+  <div class="solution-steps reveal">
+    <div class="step">
+      <span class="step-num">01</span>
+      <div class="step-content">
+        <strong>1工程ずつ言語化する</strong>
+        <p>「なんとなくやっている仕事」を、1工程単位まで言葉にします。曖昧なままでは、改善も自動化も始まりません。</p>
+      </div>
+    </div>
+    <div class="step">
+      <span class="step-num">02</span>
+      <div class="step-content">
+        <strong>判断基準を外に出す</strong>
+        <p>「いつも私がやっている」という属人化の正体を見つけます。言葉にすることで、人にもAIにも渡せるようになります。</p>
+      </div>
+    </div>
+    <div class="step">
+      <span class="step-num">03</span>
+      <div class="step-content">
+        <strong>誰でもできる形にする</strong>
+        <p>分解された仕事があれば、どこに道具が使えるかが見えてきます。ツールの話はその後です。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑤ プログラム（ティール背景） -->
+<div class="program-bg">
+  <section>
+    <p class="section-label reveal">Program</p>
+    <h2 class="section-title reveal">3時間の構成</h2>
+    <p class="section-body reveal">このワークショップでは、1つの業務に絞って取り組みます。あなたの仕事を"外から見える状態"にします。</p>
+    <div class="program-grid reveal">
+      <div class="program-card">
+        <p class="card-phase">前半</p>
+        <p class="card-title">業務を分解する</p>
+        <ul class="card-items">
+          <li>やっていることをすべて吐き出す</li>
+          <li>頭の中を可視化する</li>
+          <li>今日扱う1テーマを決める</li>
+        </ul>
+      </div>
+      <div class="program-card">
+        <p class="card-phase">中盤（メイン）</p>
+        <p class="card-title">ムダ・属人化を見つける</p>
+        <ul class="card-items">
+          <li>曖昧ワードの分解</li>
+          <li>判断基準の言語化</li>
+          <li>1工程単位への分解</li>
+        </ul>
+      </div>
+      <div class="program-card">
+        <p class="card-phase">後半</p>
+        <p class="card-title">自動化できるポイントを見つける</p>
+        <ul class="card-items">
+          <li>業務フローの可視化</li>
+          <li>改善・自動化ポイントを探す</li>
+          <li>1つだけ実際に改善する</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ⑥ 参加後の変化 -->
+<section>
+  <p class="section-label reveal">Outcomes</p>
+  <h2 class="section-title reveal">参加後に起きること</h2>
+  <div class="outcomes-grid reveal">
+    <div class="outcome-item">
+      <strong>自分の仕事を説明できる</strong>
+      <p>「何をやっているか」を人に伝えられる状態になります</p>
+    </div>
+    <div class="outcome-item">
+      <strong>属人化が見える</strong>
+      <p>「自分しか知らない」がどこにあるかがわかります</p>
+    </div>
+    <div class="outcome-item">
+      <strong>AIが使える状態になる</strong>
+      <p>渡せる指示があれば、ツールは動き始めます</p>
+    </div>
+    <div class="outcome-item">
+      <strong>「忙しい」の正体がわかる</strong>
+      <p>何に時間を使っているかが見えてきます</p>
+    </div>
+    <div class="outcome-item">
+      <strong>明日から動ける</strong>
+      <p>1つの業務を"人に任せられる状態"にして持ち帰ります</p>
+    </div>
+  </div>
+<section>
+  <p class="section-label reveal">About</p>
+  <h2 class="section-title reveal">講師について</h2>
+  <div class="instructor-card reveal">
+    <p>
+      これまで業務改善やバックオフィス支援に関わる中で、多くの現場で「仕事の曖昧さ」が課題になっているのを見てきました。<br>
+      <span style="font-size:0.88rem;color:var(--teal);">（EC事業者での業務分解・RPA導入など、複数の業務改善支援に関与）</span><br><br>
+      このワークショップでは、実務の中で培った視点をもとに、仕事の解像度を上げるための考え方をお伝えします。<br><br>
+      ツールの紹介や導入支援ではなく、「思考を変えること」に時間を使います。それが、長く使える力になると考えているからです。
+    </p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ⑧ 開催概要 -->
+<section>
+  <p class="section-label reveal">Overview</p>
+  <h2 class="section-title reveal">開催概要</h2>
+  <div class="overview-table reveal">
+    <div class="overview-row">
+      <span class="overview-label">日程</span>
+      <span class="overview-value">2026年5月16日（土）</span>
+    </div>
+    <div class="overview-row">
+      <span class="overview-label">時間</span>
+      <span class="overview-value">14:00〜17:00（3時間）</span>
+    </div>
+    <div class="overview-row">
+      <span class="overview-label">場所</span>
+      <span class="overview-value">YAMAGA BASE</span>
+    </div>
+    <div class="overview-row">
+      <span class="overview-label">定員</span>
+      <span class="overview-value">6〜8名（少人数制）</span>
+    </div>
+    <div class="overview-row">
+      <span class="overview-label">対象</span>
+      <span class="overview-value">小規模事業者の代表者・個人事業主・業務を見直したい方（個人参加限定）</span>
+    </div>
+    <div class="overview-row">
+      <span class="overview-label">参加費</span>
+      <span class="overview-value">¥9,800（税込）</span>
+    </div>
+    <div class="overview-row">
+      <span class="overview-label">支払い</span>
+      <span class="overview-value">銀行振込（メイン）/ PayPay（任意）｜入金確認後に参加確定</span>
+    </div>
+    <div class="overview-row">
+      <span class="overview-label">振込期限</span>
+      <span class="overview-value">申込から3日以内推奨</span>
+    </div>
+  </div>
+</section>
+
+<div class="business-lab-note reveal">
+  <p>より深く取り組みたい方は、会社全体の業務設計を行うプログラムもご案内しています。<a href="#">詳細はこちら</a></p>
+</div>
+
+<!-- ⑨ CTA -->
+<div class="cta-bg" id="apply">
+  <div class="cta-inner">
+    <p class="cta-lead reveal">「なんとなく回している仕事」を<br>この3時間で、一度<strong>"見える状態"</strong>にしてみませんか？</p>
+    <p class="section-label reveal">Apply</p>
+    <h2 class="section-title reveal">参加申込</h2>
+    <div class="price-display reveal">
+      <span class="amount">¥9,800</span>
+      <span class="unit">（税込）</span>
+      <p class="tax">BANK TRANSFER MAIN · PAYPAY OPTIONAL</p>
+    </div>
+    <div class="reveal">
+      <p class="seats-remaining">残り <span>○</span> 席　<small>（6〜8名限定）</small></p>
+      <p class="small-group-note">一人ひとりの業務に対して、しっかり向き合うための人数設定です。<br>満席になり次第、受付終了となります。</p>
+      <a class="cta-btn" href="#">参加申し込みをする</a>
+      <div class="payment-methods">
+        <span class="pay-badge">銀行振込</span>
+        <span class="pay-badge sub">PayPay</span>
+      </div>
+      <p class="cta-note">
+        ※ 入金確認後に参加確定となります<br>
+        ※ 振込期限は申込から3日以内を推奨します<br>
+        ※ 振替対応も可能です（ご相談ください）
+      </p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- キャンセルポリシー -->
+<section>
+  <p class="section-label reveal">Policy</p>
+  <h2 class="section-title reveal">キャンセルポリシー</h2>
+  <div class="refund-grid reveal">
+    <div class="refund-item">
+      <p class="days">7日前まで</p>
+      <p class="rate">全額</p>
+      <p class="label">返金</p>
+    </div>
+    <div class="refund-item">
+      <p class="days">6日前〜前日</p>
+      <p class="rate">50%</p>
+      <p class="label">返金</p>
+    </div>
+    <div class="refund-item no-refund">
+      <p class="days">当日</p>
+      <p class="rate">—</p>
+      <p class="label">返金不可</p>
+    </div>
+  </div>
+  <p class="section-body reveal" style="margin-top:1.4rem;font-size:0.85rem;">
+    ※ 振込手数料は参加者負担となります。振替対応も承ります（推奨）。
+  </p>
+</section>
+
+<!-- 免責 -->
+<div class="disclaimer">
+  <p>
+    ・本ワークショップの効果には個人差があります。特定の成果を保証するものではありません。<br>
+    ・ワーク内での業務情報の共有は参加者の自己判断によるものとします。<br>
+    ・Business Lab（会社の構造設計）との連携については、<a href="#">こちら</a>をご参照ください。
+  </p>
+</div>
+
+<footer>
+  <p>© 2025 Glocal Lab. · YAMAGA BASE · All rights reserved.</p>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 70);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
