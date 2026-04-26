@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>業務半自動化スターターキット | Business Lab.</title>
+<meta name="description" content="AIを使って繰り返し業務を半自動化。15〜20分の診断で、あなたの業務の改善ポイントを特定し、すぐ使えるテンプレートを生成します。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f1117;
+  --surface:#181c27;
+  --surface2:#1e2436;
+  --border:#2a3050;
+  --accent:#e87c3a;
+  --blue:#3a7ce8;
+  --text:#f0f2f8;
+  --text2:#c0c8dc;
+  --text3:#8892aa;
+  --green:#3ac98a;
+  --radius:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Noto Sans JP',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.7;
+  font-size:16px;
+}
+
+/* ── ヘッダー ── */
+.site-header{
+  position:sticky;top:0;z-index:100;
+  border-bottom:1px solid var(--border);
+  background:rgba(15,17,23,.92);
+  backdrop-filter:blur(12px);
+  padding:14px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-mark{
+  width:30px;height:30px;
+  background:var(--accent);
+  border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Mono',monospace;
+  font-weight:700;font-size:14px;color:#fff;
+}
+.logo-name{font-size:13px;font-weight:700;letter-spacing:.02em;}
+.logo-sub{font-size:10px;color:var(--text3);font-family:'IBM Plex Mono',monospace;letter-spacing:.15em;}
+.header-cta{
+  background:var(--accent);color:#fff;
+  border:none;padding:8px 18px;
+  border-radius:var(--radius);
+  font-family:'Noto Sans JP',sans-serif;
+  font-size:13px;font-weight:700;
+  cursor:pointer;text-decoration:none;
+  transition:opacity .2s;white-space:nowrap;
+}
+.header-cta:hover{opacity:.85;}
+
+/* ── ヒーロー ── */
+.hero{
+  max-width:860px;margin:0 auto;
+  padding:100px 24px 80px;
+  text-align:center;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;color:var(--accent);
+  letter-spacing:.2em;
+  border:1px solid rgba(232,124,58,.35);
+  padding:4px 14px;border-radius:20px;
+  margin-bottom:28px;
+}
+.hero-title{
+  font-size:clamp(28px,5vw,52px);
+  font-weight:700;
+  line-height:1.25;
+  margin-bottom:20px;
+  letter-spacing:-.01em;
+}
+.hero-title em{
+  font-style:normal;
+  color:var(--accent);
+}
+.hero-sub{
+  font-size:clamp(15px,2vw,18px);
+  color:var(--text2);
+  max-width:560px;margin:0 auto 40px;
+  line-height:1.85;
+}
+.hero-time{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;color:var(--text3);
+  background:var(--surface);
+  border:1px solid var(--border);
+  padding:5px 14px;border-radius:20px;
+  margin-bottom:36px;
+}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--accent);color:#fff;
+  border:none;padding:16px 36px;
+  border-radius:var(--radius);
+  font-family:'Noto Sans JP',sans-serif;
+  font-size:17px;font-weight:700;
+  cursor:pointer;text-decoration:none;
+  transition:opacity .2s,transform .15s;
+  letter-spacing:.02em;
+}
+.btn-primary:hover{opacity:.88;transform:translateY(-2px);}
+.btn-primary svg{width:18px;height:18px;}
+.hero-note{
+  margin-top:16px;
+  font-size:12px;color:var(--text3);
+}
+
+/* ── セクション共通 ── */
+section{padding:80px 24px;}
+.section-inner{max-width:860px;margin:0 auto;}
+.section-label{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;color:var(--accent);
+  letter-spacing:.25em;text-transform:uppercase;
+  margin-bottom:14px;
+}
+.section-title{
+  font-size:clamp(20px,3vw,28px);
+  font-weight:700;line-height:1.4;
+  margin-bottom:14px;
+}
+.section-desc{
+  font-size:15px;color:var(--text2);
+  line-height:1.9;max-width:640px;
+}
+.divider{
+  border:none;
+  border-top:1px solid var(--border);
+  margin:0 24px;
+}
+
+/* ── 課題提起 ── */
+.pain-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:14px;margin-top:40px;
+}
+.pain-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:20px;
+}
+.pain-icon{font-size:22px;margin-bottom:10px;}
+.pain-title{font-size:15px;font-weight:700;margin-bottom:6px;}
+.pain-body{font-size:13px;color:var(--text3);line-height:1.8;}
+
+/* ── ツール説明 ── */
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:32px;
+  margin-top:40px;
+  align-items:start;
+}
+@media(max-width:640px){.about-grid{grid-template-columns:1fr;}}
+.about-quote{
+  border-left:3px solid var(--accent);
+  padding:16px 18px;
+  background:var(--surface);
+  border-radius:0 var(--radius) var(--radius) 0;
+  font-size:14px;color:var(--text2);line-height:1.9;
+  font-style:italic;
+}
+.about-quote cite{
+  display:block;margin-top:10px;
+  font-style:normal;font-size:12px;
+  color:var(--text3);font-family:'IBM Plex Mono',monospace;
+}
+.about-quote cite a{color:var(--accent);text-decoration:none;}
+.about-quote cite a:hover{text-decoration:underline;}
+.about-points{display:flex;flex-direction:column;gap:14px;}
+.about-point{
+  display:flex;align-items:flex-start;gap:12px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:14px 16px;
+}
+.about-point-icon{
+  width:32px;height:32px;flex-shrink:0;
+  background:rgba(232,124,58,.12);
+  border:1px solid rgba(232,124,58,.25);
+  border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:14px;font-weight:700;color:var(--accent);
+}
+.about-point-text{font-size:14px;color:var(--text2);line-height:1.75;}
+.about-point-text strong{color:var(--text);font-weight:700;}
+
+/* ── ステップ ── */
+.steps{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:0;
+  margin-top:40px;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+.step{
+  padding:24px 20px;
+  border-right:1px solid var(--border);
+  position:relative;
+}
+.step:last-child{border-right:none;}
+@media(max-width:640px){
+  .steps{grid-template-columns:1fr;}
+  .step{border-right:none;border-bottom:1px solid var(--border);}
+  .step:last-child{border-bottom:none;}
+}
+.step-num{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;font-weight:600;color:var(--accent);
+  letter-spacing:.15em;margin-bottom:10px;
+}
+.step-title{font-size:15px;font-weight:700;margin-bottom:6px;}
+.step-body{font-size:13px;color:var(--text3);line-height:1.8;}
+.step-time{
+  display:inline-block;margin-top:10px;
+  font-size:11px;font-family:'IBM Plex Mono',monospace;
+  color:var(--text3);
+  background:var(--surface2);
+  padding:2px 8px;border-radius:10px;
+}
+
+/* ── 成果物 ── */
+.outputs{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:14px;margin-top:40px;
+}
+.output-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px;
+  display:flex;flex-direction:column;gap:8px;
+}
+.output-icon{font-size:24px;}
+.output-name{font-size:14px;font-weight:700;}
+.output-desc{font-size:12px;color:var(--text3);line-height:1.75;}
+.chip{
+  display:inline-block;
+  font-size:11px;font-family:'IBM Plex Mono',monospace;
+  padding:2px 8px;border-radius:10px;
+  font-weight:600;margin-top:4px;
+}
+.chip-orange{background:rgba(232,124,58,.12);color:var(--accent);border:1px solid rgba(232,124,58,.25);}
+.chip-blue{background:rgba(58,124,232,.12);color:#6ea8f8;border:1px solid rgba(58,124,232,.25);}
+.chip-green{background:rgba(58,201,138,.12);color:var(--green);border:1px solid rgba(58,201,138,.25);}
+
+/* ── CTA ── */
+.cta-section{
+  text-align:center;
+  padding:100px 24px;
+}
+.cta-inner{
+  max-width:600px;margin:0 auto;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:52px 40px;
+}
+.cta-label{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;color:var(--accent);
+  letter-spacing:.2em;margin-bottom:16px;
+}
+.cta-title{
+  font-size:clamp(20px,3vw,26px);
+  font-weight:700;line-height:1.4;
+  margin-bottom:12px;
+}
+.cta-sub{
+  font-size:14px;color:var(--text2);
+  line-height:1.85;margin-bottom:32px;
+}
+.cta-meta{
+  margin-top:16px;
+  font-size:12px;color:var(--text3);
+  line-height:1.9;
+}
+
+/* ── フッター ── */
+footer{
+  border-top:1px solid var(--border);
+  padding:32px 24px;
+  text-align:center;
+}
+.footer-inner{max-width:860px;margin:0 auto;}
+.footer-brand{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;color:var(--text3);
+  letter-spacing:.15em;
+  margin-bottom:8px;
+}
+.footer-copy{font-size:11px;color:var(--text3);}
+
+/* ── アニメーション ── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.fade-up{
+  opacity:0;
+  animation:fadeUp .6s ease forwards;
+}
+.delay-1{animation-delay:.1s;}
+.delay-2{animation-delay:.2s;}
+.delay-3{animation-delay:.35s;}
+.delay-4{animation-delay:.5s;}
+
+@media(max-width:640px){
+  .hero{padding:70px 20px 60px;}
+  section{padding:60px 20px;}
+  .cta-inner{padding:36px 24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ヘッダー -->
+<header class="site-header">
+  <div class="logo">
+    <div class="logo-mark">業</div>
+    <div>
+      <div class="logo-name">業務半自動化スターターキット</div>
+      <div class="logo-sub">Business Lab.</div>
+    </div>
+  </div>
+  <a class="header-cta" href="https://hiromi-code.github.io/gyomu-kaikaku-tool/" target="_blank" rel="noopener">診断をはじめる →</a>
+</header>
+
+<!-- ヒーロー -->
+<section class="hero">
+  <div class="hero-badge fade-up">BUSINESS AUTOMATION TOOLKIT</div>
+  <h1 class="hero-title fade-up delay-1">
+    あなたのビジネスを<br>
+    <em>診断して</em>加速させる
+  </h1>
+  <p class="hero-sub fade-up delay-2">
+    繰り返し業務の中に、AIが半自動化できる工程が眠っています。<br>
+    15〜20分の診断で、改善ポイントを特定。すぐ使えるテンプレートを生成します。
+  </p>
+  <div class="hero-time fade-up delay-3">⏱ 約15〜20分で完了</div>
+  <br>
+  <a class="btn-primary fade-up delay-4" href="https://hiromi-code.github.io/gyomu-kaikaku-tool/" target="_blank" rel="noopener">
+    無料で診断する
+    <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+  <p class="hero-note fade-up delay-4">無料AI（Claude・Gemini）を活用 ／ 有料プラン不要</p>
+</section>
+
+<hr class="divider">
+
+<!-- 課題提起 -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">PROBLEM</div>
+    <h2 class="section-title">こんな業務が毎日繰り返されていませんか？</h2>
+    <p class="section-desc">
+      中小企業の現場では、「手間はかかるけど判断は要らない」業務が大量に発生しています。
+      これらは適切に整理すれば、無料のAIで大幅に削減できます。
+    </p>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-icon">📄</div>
+        <div class="pain-title">同じ情報を何度も入力する</div>
+        <div class="pain-body">請求書・注文書・台帳…同じデータを複数のファイルに転記し続けている</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">✅</div>
+        <div class="pain-title">毎回同じチェックをしている</div>
+        <div class="pain-body">金額の確認・書類の有無・期日のチェック。ルールは決まっているのに目視で確認</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">📧</div>
+        <div class="pain-title">定型のやり取りに時間を取られる</div>
+        <div class="pain-body">催促メール・確認の連絡・報告書…毎回ゼロから書き直している</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">🔄</div>
+        <div class="pain-title">引き継ぎのたびにやり直しになる</div>
+        <div class="pain-body">担当者が変わるとゼロからの説明が必要。手順が頭の中にしかない</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ツール説明 -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">ABOUT</div>
+    <h2 class="section-title">業務を「見える化」して<br>改善の入口をつくるツール</h2>
+    <div style="border-left:3px solid var(--accent);padding:14px 18px;margin:28px 0 0;background:var(--surface2);border-radius:0 var(--radius) var(--radius) 0;">
+      <p style="font-size:15px;color:var(--text);line-height:1.9;font-weight:500;">このツールは、正しい答えを出すものではありません。<br><em style="font-style:normal;color:var(--accent);">"曖昧な仕事"に違和感を出すためのツール</em>です。</p>
+    </div>
+    <div style="margin-top:32px;" class="about-grid">
+      <div>
+        <div class="about-quote">
+          「自動化」というと、大規模なシステム導入を想像しがちです。しかし中小企業に必要なのは、まず業務の手順を言語化し、「ルールで動く部分」と「人の判断が必要な部分」を切り分けることです。その整理があってはじめて、AIや仕組み化が機能します。
+          <cite>— <a href="https://business-automation-psi.vercel.app/blog/business-automation-basics" target="_blank" rel="noopener">中小企業が今すぐできる業務自動化の基礎知識</a> より</cite>
+        </div>
+        <div style="margin-top:16px;">
+          <p style="font-size:14px;color:var(--text2);line-height:1.9;">
+            このツールは、その「切り分け」を15〜20分のQ&amp;Aで実現します。
+            業務フローを入力するだけで、AIが自動化できる工程を特定し、
+            すぐ使えるExcelテンプレートとAIプロンプトを生成します。
+          </p>
+        </div>
+      </div>
+      <div class="about-points">
+        <div class="about-point">
+          <div class="about-point-icon">◎</div>
+          <div class="about-point-text"><strong>無料AIで今すぐ自動化できる工程</strong>を特定<br>Claude・Gemini（無料プラン）で動作する指示文を生成</div>
+        </div>
+        <div class="about-point">
+          <div class="about-point-icon">△</div>
+          <div class="about-point-text"><strong>整理すれば自動化できる工程</strong>を可視化<br>ルール化・テンプレート化で担当者依存をなくす</div>
+        </div>
+        <div class="about-point">
+          <div class="about-point-icon">×</div>
+          <div class="about-point-text"><strong>人の判断が必要な工程</strong>を明確化<br>本当に人が関わるべき業務に集中できるようになる</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ステップ -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">HOW IT WORKS</div>
+    <h2 class="section-title">5つのステップで完結</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">STEP 01</div>
+        <div class="step-title">業務を入力する</div>
+        <div class="step-body">困っている業務と、取り掛かりから完了までの手順を入力します</div>
+        <span class="step-time">約3分</span>
+      </div>
+      <div class="step">
+        <div class="step-num">STEP 02</div>
+        <div class="step-title">手順を整理する</div>
+        <div class="step-body">AIが入力内容をもとに手順を整理。確認・修正できます</div>
+        <span class="step-time">約5分</span>
+      </div>
+      <div class="step">
+        <div class="step-num">STEP 03</div>
+        <div class="step-title">業務を見える化</div>
+        <div class="step-body">フローチャートと自動化スコアでどこが改善できるか一目で確認</div>
+        <span class="step-time">約5分</span>
+      </div>
+      <div class="step">
+        <div class="step-num">STEP 04</div>
+        <div class="step-title">改善ポイントを選ぶ</div>
+        <div class="step-body">まず着手する1つの業務を選択。ROI（費用対効果）も試算できます</div>
+        <span class="step-time">約3分</span>
+      </div>
+      <div class="step">
+        <div class="step-num">STEP 05</div>
+        <div class="step-title">成果物を受け取る</div>
+        <div class="step-body">AIプロンプト・Excelテンプレート・業務フロー資料を取得</div>
+        <span class="step-time">約2分</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- 成果物 -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">DELIVERABLES</div>
+    <h2 class="section-title">診断後に受け取れるもの</h2>
+    <p class="section-desc">業種・ポジション・業務内容に合わせて、すぐ使える形で生成されます。</p>
+    <div class="outputs">
+      <div class="output-card">
+        <div class="output-icon">📊</div>
+        <div class="output-name">Excelテンプレート</div>
+        <div class="output-desc">経費精算・請求書・入金消込・在庫管理など、業務に合わせたシートを生成。条件付き書式・自動判定付き</div>
+        <span class="chip chip-green">ダウンロード可</span>
+      </div>
+      <div class="output-card">
+        <div class="output-icon">📋</div>
+        <div class="output-name">AIプロンプト</div>
+        <div class="output-desc">無料のClaude・Geminiにそのまま貼り付けると、あなたの業務専用のExcelや文書を自動作成してくれる指示文</div>
+        <span class="chip chip-blue">コピーして使う</span>
+      </div>
+      <div class="output-card">
+        <div class="output-icon">📷</div>
+        <div class="output-name">OCR転記プロンプト</div>
+        <div class="output-desc">紙の書類・領収書の写真をAIに読み込ませて、表形式に変換するプロンプト。手入力ゼロへ</div>
+        <span class="chip chip-orange">経費精算向け</span>
+      </div>
+      <div class="output-card">
+        <div class="output-icon">🗂</div>
+        <div class="output-name">業務フロー資料</div>
+        <div class="output-desc">手順とフローチャートをPowerPointで出力。マニュアルたたき台として、引き継ぎ・教育に使えます</div>
+        <span class="chip chip-orange">たたき台として活用</span>
+      </div>
+    </div>
+    <div style="margin-top:28px;border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;padding:18px 20px;background:var(--surface);">
+      <p style="font-size:14px;color:var(--text2);line-height:1.95;">
+        このツールは<strong style="color:var(--text);">"答え"ではなく、"見直すための材料"</strong>を出します。<br>
+        制作物が"ズレ"たときに「どこが曖昧か」が見えてきます。
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-label">GET STARTED</div>
+    <h2 class="cta-title">まず1つの業務から<br>始めてみてください</h2>
+    <p class="cta-sub">
+      診断は無料で始められます。<br>
+      「うちの業務に使えるか？」という確認だけでも構いません。<br>
+      15〜20分、試してみてください。
+    </p>
+    <a class="btn-primary" href="https://hiromi-code.github.io/gyomu-kaikaku-tool/" target="_blank" rel="noopener" style="font-size:16px;padding:15px 36px;margin:0 auto;display:inline-flex;">
+      無料で診断する
+      <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.75 9h10.5M9.75 4.5 14.25 9l-4.5 4.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <p class="cta-meta">
+      無料AI（Claude・Gemini）を活用 ／ 有料プラン不要<br>
+      成果物（Excel・プロンプト）の取得には料金が発生します（¥9,800・買い切り）
+    </p>
+  </div>
+</section>
+
+<!-- ワークショップ橋渡し -->
+<section style="padding:0 24px 80px;">
+  <div style="max-width:860px;margin:0 auto;">
+    <div style="border:1px solid var(--border);border-radius:var(--radius);padding:32px 36px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3);letter-spacing:.2em;margin-bottom:10px;">NEXT STEP</div>
+        <div style="font-size:17px;font-weight:700;margin-bottom:8px;">ツールを使い終えたら、次のステップへ</div>
+        <p style="font-size:14px;color:var(--text2);line-height:1.85;max-width:480px;">
+          診断で見えてきた課題を、どう仕組みに落とし込むか。<br>
+          Business Lab. のワークショップでは、実際の業務をテーマに<br>
+          改善の"型"を一緒につくります。
+        </p>
+      </div>
+      <a href="https://glocalab.net/workshop/" target="_blank" rel="noopener"
+         style="flex-shrink:0;display:inline-flex;align-items:center;gap:8px;
+                border:1px solid var(--border);color:var(--text2);
+                padding:12px 22px;border-radius:var(--radius);
+                font-family:'Noto Sans JP',sans-serif;font-size:14px;font-weight:700;
+                text-decoration:none;white-space:nowrap;
+                transition:border-color .2s,color .2s;">
+        ワークショップを見る →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- フッター -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">GLOCAL LAB.</div>
+    <div class="footer-copy">© 2025 Glocal Lab. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
